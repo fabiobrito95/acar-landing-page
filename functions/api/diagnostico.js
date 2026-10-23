@@ -195,9 +195,31 @@ async function alreadyRecorded(env, token, tab, id) {
   const res = await fetchWithTimeout(SHEETS_URL + env.GOOGLE_SHEET_ID + "/values/" + rangeOf(tab, "B2:B"), {
     headers: { Authorization: "Bearer " + token }
   });
-  if (!res.ok) throw new Error("sheets_read_" + res.status);
+  if (!res.ok) throw new Error(sheetsError("sheets_read", res.status));
   const data = await res.json();
   return (data.values || []).some((row) => row[0] === id);
+}
+
+/* Traduz o status do Google num código de configuração legível nos logs */
+function sheetsError(prefix, status) {
+  if (status === 400) return "sheets_aba_nao_encontrada";        // nome da aba errado
+  if (status === 403) return "sheets_sem_permissao";             // planilha não compartilhada ou API desativada
+  if (status === 404) return "sheets_planilha_nao_encontrada";   // GOOGLE_SHEET_ID errado
+  return prefix + "_" + status;
+}
+
+/* Lista os nomes das abas da planilha (só nomes, sem conteúdo) para o log */
+async function tabNames(cfg, token) {
+  try {
+    const res = await fetchWithTimeout(SHEETS_URL + cfg.GOOGLE_SHEET_ID + "?fields=sheets.properties.title", {
+      headers: { Authorization: "Bearer " + token }
+    });
+    if (!res.ok) return null;
+    const data = await res.json();
+    return (data.sheets || []).map((s) => s.properties && s.properties.title).filter(Boolean);
+  } catch (e) {
+    return null;
+  }
 }
 
 async function appendRow(env, token, tab, row) {
@@ -208,7 +230,7 @@ async function appendRow(env, token, tab, row) {
     headers: { Authorization: "Bearer " + token, "Content-Type": "application/json" },
     body: JSON.stringify({ majorDimension: "ROWS", values: [row] })
   });
-  if (!res.ok) throw new Error("sheets_append_" + res.status);
+  if (!res.ok) throw new Error(sheetsError("sheets_append", res.status));
   const data = await res.json();
   // Só consideramos gravado se o Google informar exatamente uma linha nova
   if (!data.updates || data.updates.updatedRows !== 1) throw new Error("sheets_append_sem_confirmacao");
@@ -301,8 +323,9 @@ export async function onRequestPost(context) {
 
   const tab = cfg.GOOGLE_SHEET_TAB;
 
+  let token = null;
   try {
-    const token = await getAccessToken(cfg);
+    token = await getAccessToken(cfg);
     if (await alreadyRecorded(cfg, token, tab, data.id)) {
       return json(200, { ok: true, id: data.id, duplicate: true });
     }
@@ -316,6 +339,13 @@ export async function onRequestPost(context) {
       : (err && err.name === "AbortError") ? "google_timeout"
       : "erro_interno";
     console.error("[diagnostico] falha ao gravar: " + code);
+    if (code === "sheets_aba_nao_encontrada" && token) {
+      // Ajuda a corrigir a configuração: mostra a aba esperada e as existentes
+      const names = await tabNames(cfg, token);
+      console.error("[diagnostico] aba esperada: \"" + tab + "\" | abas na planilha: " +
+        (names ? JSON.stringify(names) : "não foi possível listar") +
+        " | ajuste o nome da aba ou a variável GOOGLE_SHEET_TAB");
+    }
     // Credencial recusada ou token revogado: descarta o token guardado
     if (/auth|_401$/.test(code) || code === "erro_interno") cachedToken = null;
     return json(502, { ok: false, error: "falha_planilha" });
@@ -324,6 +354,9 @@ export async function onRequestPost(context) {
 
 export async function onRequest(context) {
   if (context.request.method === "POST") return onRequestPost(context);
-  return new Response(null, { status: 405, headers: { Allow: "POST" } });
+  // Abrir o endereço no navegador (GET) mostra que a rota existe, sem gravar nada
+  return new Response(JSON.stringify({ ok: false, error: "metodo_nao_permitido", info: "Este endereço recebe apenas envios do formulário (POST)." }), {
+    status: 405,
+    headers: { Allow: "POST", "Content-Type": "application/json; charset=utf-8", "Cache-Control": "no-store" }
+  });
 }
-
