@@ -1,0 +1,21 @@
+# Arquivos que NÃO devem ser publicados como parte do site.
+# (O Cloudflare lê este arquivo ao enviar a pasta de assets.)
+
+# Código do servidor e configuração
+functions
+src
+wrangler.jsonc
+wrangler.toml
+.assetsignore
+
+# Controle de versão, dependências e credenciais locais
+.git
+.gitignore
+.gitattributes
+node_modules
+.wrangler
+.dev.vars
+.env*
+
+# Documentação interna
+README.md
