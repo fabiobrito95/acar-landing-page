@@ -1,0 +1,31 @@
+// Configuração do Cloudflare Workers para a landing page ACAR™.
+// Usada pelo comando de deploy "npx wrangler deploy" (Workers Builds).
+{
+  // Precisa ser igual ao nome do Worker já criado no Cloudflare
+  // (endereço acar-landing-page.<conta>.workers.dev).
+  "name": "acar-landing-page",
+
+  // Ponto de entrada: envia /api/diagnostico para a API e o resto para o site estático.
+  "main": "src/worker.js",
+  "compatibility_date": "2025-09-01",
+
+  // Arquivos do site (HTML, CSS, JS, favicon). O que não deve ser público
+  // (código do servidor, README, configurações) está listado em .assetsignore.
+  // Os arquivos estáticos são servidos primeiro; só o que não existe como
+  // arquivo (como /api/diagnostico) chega ao Worker.
+  "assets": {
+    "directory": "./",
+    "binding": "ASSETS"
+  },
+
+  // Mantém as variáveis de texto criadas no painel do Cloudflare
+  // (GOOGLE_SERVICE_ACCOUNT_EMAIL, GOOGLE_SHEET_ID...). Sem isto, cada deploy
+  // apagaria as variáveis que não estão declaradas neste arquivo.
+  // Os Secrets (como GOOGLE_PRIVATE_KEY) nunca são apagados pelo deploy.
+  "keep_vars": true,
+
+  // Registros (console.error) visíveis em Workers → acar-landing-page → Logs.
+  "observability": {
+    "enabled": true
+  }
+}
