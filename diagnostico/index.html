@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Solicitar diagnóstico · ACAR™</title>
+  <meta name="description" content="Formulário de solicitação do Diagnóstico Estratégico ACAR™.">
+  <meta name="theme-color" content="#08090B">
+  <meta name="robots" content="noindex, follow">
+
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+
+  <!-- Fontes: Manrope (títulos) e Inter (textos e interface) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap">
+
+  <!-- Mesmo sistema visual da landing + estilos das páginas internas -->
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../pages.css">
+  <script src="../script.js"></script>
+  <script src="../tracking.js" defer></script>
+  <script src="form.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#formulario">Pular para o formulário</a>
+
+  <!-- ================= CABEÇALHO ================= -->
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a class="brand reveal" href="/" aria-label="ACAR™ Diagnóstico Estratégico, voltar à página inicial">
+        <span class="brand__mark">
+          <svg class="brand__eagle" viewBox="0 0 48 36" aria-hidden="true" focusable="false">
+            <path fill="currentColor" d="M19 8.5C25 4.2 33.5 4.4 38.2 8.6L46.4 14.6C47 16.8 46.2 19.6 44.2 21.2L43.4 18.1 37.3 18.6C35.2 21.4 31.8 23.6 27.6 26.1L11 33.6 20.2 25.2 4.6 27.4 17.6 20.3 2.8 19.4 16.8 14.4 7.6 10.6Z"/>
+            <path fill="#08090B" d="M31.6 10.2 39 10.4 36.4 12.9 33.4 12.3Z"/>
+            <path d="M38.6 14.8 44.6 15.8" stroke="#08090B" stroke-width=".9" stroke-linecap="round"/>
+          </svg>
+          <span class="brand__name">ACAR<sup>™</sup></span>
+        </span>
+        <span class="brand__descriptor"><span>Diagnóstico</span><span>Estratégico</span></span>
+      </a>
+
+      <a class="btn btn--outline site-header__cta site-header__back reveal" style="--d: 1" href="/" aria-label="Voltar ao início">
+        <svg class="btn__icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M4.5 11.5 11.5 4.5M5.5 4.5h6v6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span><span class="site-header__back-long">Voltar ao </span><span class="site-header__back-short">I</span><span class="site-header__back-long">i</span>nício</span>
+      </a>
+    </div>
+  </header>
+
+  <main class="page" id="conteudo">
+    <div class="container page__container">
+
+      <header class="page__intro reveal" style="--d: 2">
+        <h1 class="page__title">Solicite seu <em>Diagnóstico Estratégico ACAR™</em></h1>
+        <p class="page__lead">Responda três etapas rápidas sobre sua empresa e o momento do negócio. Com essas informações, vamos avaliar se o diagnóstico é adequado para o seu momento.</p>
+      </header>
+
+
+      <!-- ================= FORMULÁRIO ================= -->
+      <form class="form-card reveal" style="--d: 3" id="formulario" novalidate aria-describedby="form-progress-text">
+
+        <ol class="stepper" id="stepper" aria-label="Etapas do formulário">
+          <li class="stepper__item is-current" aria-current="step"><span class="stepper__num">1</span><span class="stepper__label">Você e sua empresa</span></li>
+          <li class="stepper__item"><span class="stepper__num">2</span><span class="stepper__label">Momento do negócio</span></li>
+          <li class="stepper__item"><span class="stepper__num">3</span><span class="stepper__label">Contato</span></li>
+        </ol>
+        <p class="visually-hidden" id="form-progress-text" aria-live="polite">Etapa 1 de 3: Sobre você e sua empresa</p>
+
+        <!-- ---------- Etapa 1 ---------- -->
+        <fieldset class="form-step" data-step="1" aria-labelledby="step1-title">
+          <div class="form-step__head">
+            <span class="form-step__count">Etapa 1 de 3</span>
+            <h2 class="form-step__title" id="step1-title" tabindex="-1">Sobre você e sua empresa</h2>
+          </div>
+
+          <div class="form-step__fields">
+            <div class="field">
+              <label class="field__label" for="nome">Nome completo</label>
+              <input class="input" id="nome" name="nome" type="text" autocomplete="name" maxlength="120" required aria-describedby="nome-error">
+              <p class="field__error" id="nome-error" aria-live="polite"></p>
+            </div>
+
+            <div class="field">
+              <label class="field__label" for="empresa">Nome da empresa</label>
+              <input class="input" id="empresa" name="empresa" type="text" autocomplete="organization" maxlength="120" required aria-describedby="empresa-error">
+              <p class="field__error" id="empresa-error" aria-live="polite"></p>
+            </div>
+
+            <div class="field-row">
+              <div class="field">
+                <label class="field__label" for="segmento">Segmento</label>
+                <select class="select" id="segmento" name="segmento" required aria-describedby="segmento-error">
+                  <option value="">Selecione</option>
+                  <option>Clínicas e consultórios</option>
+                  <option>Estética e procedimentos</option>
+                  <option>Serviços veterinários</option>
+                  <option>Imobiliária</option>
+                  <option>Serviços especializados</option>
+                  <option>Comércio</option>
+                  <option>Educação</option>
+                  <option>Outro</option>
+                </select>
+                <p class="field__error" id="segmento-error" aria-live="polite"></p>
+              </div>
+
+              <div class="field">
+                <label class="field__label" for="cidade">Cidade e estado</label>
+                <input class="input" id="cidade" name="cidade" type="text" autocomplete="address-level2" maxlength="80" placeholder="Ex.: Campinas/SP" required aria-describedby="cidade-error">
+                <p class="field__error" id="cidade-error" aria-live="polite"></p>
+              </div>
+            </div>
+
+            <div class="field" data-show-when="segmento=Outro" hidden>
+              <label class="field__label" for="segmento_outro">Qual é o segmento?</label>
+              <input class="input" id="segmento_outro" name="segmento_outro" type="text" maxlength="80" data-required-when="segmento=Outro" aria-describedby="segmento_outro-error">
+              <p class="field__error" id="segmento_outro-error" aria-live="polite"></p>
+            </div>
+
+            <div class="field">
+              <label class="field__label" for="faturamento">Faturamento mensal <span class="field__optional">(opcional)</span></label>
+              <select class="select" id="faturamento" name="faturamento">
+                <option value="">Selecione</option>
+                <option>Até R$ 10 mil</option>
+                <option>R$ 10 mil a R$ 30 mil</option>
+                <option>R$ 30 mil a R$ 100 mil</option>
+                <option>R$ 100 mil a R$ 300 mil</option>
+                <option>R$ 300 mil a R$ 1 milhão</option>
+                <option>Acima de R$ 1 milhão</option>
+                <option>Prefiro não informar</option>
+              </select>
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- ---------- Etapa 2 ---------- -->
+        <fieldset class="form-step" data-step="2" aria-labelledby="step2-title" hidden>
+          <div class="form-step__head">
+            <span class="form-step__count">Etapa 2 de 3</span>
+            <h2 class="form-step__title" id="step2-title" tabindex="-1">Momento do negócio</h2>
+          </div>
+
+          <div class="form-step__fields">
+            <fieldset class="choices" id="desafio-group" aria-describedby="desafio-error">
+              <legend class="choices__legend">Principal desafio comercial</legend>
+              <div class="choices__list">
+                <label class="choice"><input type="radio" name="desafio" value="Aquisição" required><span class="choice__mark" aria-hidden="true"></span><span class="choice__text"><strong>Aquisição</strong>Atrair mais oportunidades qualificadas.</span></label>
+                <label class="choice"><input type="radio" name="desafio" value="Conversão"><span class="choice__mark" aria-hidden="true"></span><span class="choice__text"><strong>Conversão</strong>Transformar mais oportunidades em vendas.</span></label>
+                <label class="choice"><input type="radio" name="desafio" value="Atendimento"><span class="choice__mark" aria-hidden="true"></span><span class="choice__text"><strong>Atendimento</strong>Melhorar o processo comercial e o acompanhamento.</span></label>
+                <label class="choice"><input type="radio" name="desafio" value="Retenção"><span class="choice__mark" aria-hidden="true"></span><span class="choice__text"><strong>Retenção</strong>Aumentar recompra e fidelização.</span></label>
+                <label class="choice"><input type="radio" name="desafio" value="Outro"><span class="choice__mark" aria-hidden="true"></span><span class="choice__text"><strong>Outro</strong>Vou especificar.</span></label>
+              </div>
+              <p class="field__error" id="desafio-error" aria-live="polite"></p>
+            </fieldset>
+
+            <div class="field" data-show-when="desafio=Outro" hidden>
+              <label class="field__label" for="desafio_outro">Qual é o desafio?</label>
+              <input class="input" id="desafio_outro" name="desafio_outro" type="text" maxlength="120" data-required-when="desafio=Outro" aria-describedby="desafio_outro-error">
+              <p class="field__error" id="desafio_outro-error" aria-live="polite"></p>
+            </div>
+
+            <div class="field">
+              <label class="field__label" for="desafio_detalhe">Quer explicar melhor o desafio? <span class="field__optional">(opcional)</span></label>
+              <textarea class="textarea" id="desafio_detalhe" name="desafio_detalhe" maxlength="800" aria-describedby="desafio_detalhe-hint"></textarea>
+              <p class="field__hint" id="desafio_detalhe-hint">Até 800 caracteres.</p>
+            </div>
+
+            <div class="field">
+              <label class="field__label" for="objetivo">Principal objetivo</label>
+              <input class="input" id="objetivo" name="objetivo" type="text" maxlength="160" required aria-describedby="objetivo-hint objetivo-error">
+              <p class="field__hint" id="objetivo-hint">Em uma frase curta, o que você quer alcançar.</p>
+              <p class="field__error" id="objetivo-error" aria-live="polite"></p>
+            </div>
+
+            <fieldset class="choices" id="prazo-group" aria-describedby="prazo-error">
+              <legend class="choices__legend">Prazo para resolver o desafio</legend>
+              <div class="choices__list choices__list--pills">
+                <label class="choice"><input type="radio" name="prazo" value="O quanto antes" required><span class="choice__mark" aria-hidden="true"></span><span class="choice__text">O quanto antes</span></label>
+                <label class="choice"><input type="radio" name="prazo" value="Em até 30 dias"><span class="choice__mark" aria-hidden="true"></span><span class="choice__text">Em até 30 dias</span></label>
+                <label class="choice"><input type="radio" name="prazo" value="Em 1 a 3 meses"><span class="choice__mark" aria-hidden="true"></span><span class="choice__text">Em 1 a 3 meses</span></label>
+                <label class="choice"><input type="radio" name="prazo" value="Sem prazo definido"><span class="choice__mark" aria-hidden="true"></span><span class="choice__text">Sem prazo definido</span></label>
+              </div>
+              <p class="field__error" id="prazo-error" aria-live="polite"></p>
+            </fieldset>
+          </div>
+        </fieldset>
+
+        <!-- ---------- Etapa 3 ---------- -->
+        <fieldset class="form-step" data-step="3" aria-labelledby="step3-title" hidden>
+          <div class="form-step__head">
+            <span class="form-step__count">Etapa 3 de 3</span>
+            <h2 class="form-step__title" id="step3-title" tabindex="-1">Contato</h2>
+          </div>
+
+          <div class="form-step__fields">
+            <div class="field">
+              <label class="field__label" for="whatsapp">WhatsApp com DDD</label>
+              <input class="input" id="whatsapp" name="whatsapp" type="tel" inputmode="numeric" autocomplete="tel-national" maxlength="15" placeholder="(11) 91234-5678" required aria-describedby="whatsapp-error">
+              <p class="field__error" id="whatsapp-error" aria-live="polite"></p>
+            </div>
+
+            <div class="field">
+              <label class="field__label" for="email">E-mail</label>
+              <input class="input" id="email" name="email" type="email" autocomplete="email" maxlength="160" required aria-describedby="email-error">
+              <p class="field__error" id="email-error" aria-live="polite"></p>
+            </div>
+
+            <div class="field">
+              <label class="field__label" for="instagram">Instagram da empresa <span class="field__optional">(opcional)</span></label>
+              <input class="input" id="instagram" name="instagram" type="text" autocapitalize="off" autocomplete="off" spellcheck="false" maxlength="60" placeholder="@suaempresa" aria-describedby="instagram-error">
+              <p class="field__error" id="instagram-error" aria-live="polite"></p>
+            </div>
+
+            <div class="field">
+              <label class="consent">
+                <input type="checkbox" id="consentimento" name="consentimento" value="sim" required aria-describedby="consentimento-error">
+                <span>Autorizo o contato pelo WhatsApp e e-mail informados para tratar desta solicitação, conforme a <a data-privacy-link>política de privacidade</a>.</span>
+              </label>
+              <p class="field__error" id="consentimento-error" aria-live="polite"></p>
+            </div>
+
+            <!-- Honeypot anti-spam: deve ficar vazio -->
+            <div class="hp-field" aria-hidden="true">
+              <label for="website">Não preencha este campo</label>
+              <input id="website" name="website" type="text" tabindex="-1" autocomplete="off">
+            </div>
+          </div>
+        </fieldset>
+
+        <div class="form-actions">
+          <button class="btn btn--ghost" type="button" id="btn-voltar" hidden>
+            <svg class="btn__icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M4.5 11.5 11.5 4.5M5.5 4.5h6v6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Voltar
+          </button>
+          <button class="btn btn--primary form-actions__next" type="submit" id="btn-avancar">
+            <span id="btn-avancar-label">Avançar</span>
+            <svg class="btn__icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M4.5 11.5 11.5 4.5M5.5 4.5h6v6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+
+        <div class="form-status" id="form-status" role="status" aria-live="polite"></div>
+      </form>
+
+      <p class="form-note">
+        <span>Suas respostas ficam salvas temporariamente neste navegador apenas até o envio ou até você fechar esta aba.</span>
+        <button class="link-button" type="button" id="btn-limpar">Apagar respostas</button>
+      </p>
+
+    </div>
+  </main>
+
+  <!-- ================= RODAPÉ ================= -->
+  <footer class="site-footer">
+    <div class="container site-footer__inner">
+      <a class="brand site-footer__brand" href="/" aria-label="ACAR™ Diagnóstico Estratégico, voltar à página inicial">
+        <span class="brand__mark">
+          <svg class="brand__eagle" viewBox="0 0 48 36" aria-hidden="true" focusable="false">
+            <path fill="currentColor" d="M19 8.5C25 4.2 33.5 4.4 38.2 8.6L46.4 14.6C47 16.8 46.2 19.6 44.2 21.2L43.4 18.1 37.3 18.6C35.2 21.4 31.8 23.6 27.6 26.1L11 33.6 20.2 25.2 4.6 27.4 17.6 20.3 2.8 19.4 16.8 14.4 7.6 10.6Z"/>
+            <path fill="#08090B" d="M31.6 10.2 39 10.4 36.4 12.9 33.4 12.3Z"/>
+            <path d="M38.6 14.8 44.6 15.8" stroke="#08090B" stroke-width=".9" stroke-linecap="round"/>
+          </svg>
+          <span class="brand__name">ACAR<sup>™</sup></span>
+        </span>
+        <span class="brand__descriptor"><span>Diagnóstico</span><span>Estratégico</span></span>
+      </a>
+      <nav class="site-footer__links" aria-label="Privacidade">
+        <a href="/privacidade/">Política de privacidade</a>
+        <button type="button" class="site-footer__link-btn" data-consent-open>Preferências de cookies</button>
+      </nav>
+      <p class="site-footer__copy">© 2026 ACAR™. Todos os direitos reservados.</p>
+    </div>
+  </footer>
+</body>
+</html>

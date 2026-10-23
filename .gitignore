@@ -1,0 +1,8 @@
+# Credenciais locais do Wrangler: NUNCA publicar
+.dev.vars
+*.json.key
+service-account*.json
+
+# Arquivos gerados pelo Wrangler / Node
+.wrangler/
+node_modules/
