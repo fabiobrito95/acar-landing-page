@@ -1,48 +1,16 @@
 
- // Configuração do Cloudflare Workers para a landing page ACAR™.
- // Usada pelo comando de deploy "npx wrangler deploy" (Workers Builds).
 {
-  // Precisa ser igual ao nome do Worker já criado no Cloudflare
-  // (endereço acar-landing-page.<conta>.workers.dev).
   "name": "acar-landing-page",
-
-  // Ponto de entrada: envia /api/diagnostico para a API e o resto para o site estático.
   "main": "src/worker.js",
   "compatibility_date": "2025-09-01",
-
-  // Arquivos do site (HTML, CSS, JS, favicon). O que não deve ser público
-  // (código do servidor, README, configurações) está listado em .assetsignore.
-  // Os arquivos estáticos são servidos primeiro; só o que não existe como
-  // arquivo (como /api/diagnostico) chega ao Worker.
   "assets": {
     "directory": "./",
     "binding": "ASSETS"
   },
-
-  // Variáveis NÃO secretas, publicadas junto com cada deploy.
-  // O ID da planilha não é credencial: sem a chave privada da conta de
-  // serviço ele não dá acesso a nada (a planilha só é compartilhada com ela).
-  // NUNCA declare aqui GOOGLE_PRIVATE_KEY nem GOOGLE_SERVICE_ACCOUNT_EMAIL:
-  // eles ficam como Secret no painel (Settings → Variables and secrets), e
-  // uma variável com o mesmo nome aqui substituiria o Secret.
   "vars": {
     "GOOGLE_SHEET_ID": "161Ze0GLTmmWe5tMdPJZN1LSxvU0ofU2RBll7LtNEqVw"
   },
-
-  // Não apaga variáveis criadas no painel. Atenção: deploys feitos pela
-  // integração com o GitHub podem não respeitar esta opção para variáveis
-  // de texto; por isso, valores do painel devem ser do tipo Secret.
   "keep_vars": true,
-
-  // Valida a presença dos Secrets obrigatórios.
-  "secrets": {
-    "required": [
-      "GOOGLE_SERVICE_ACCOUNT_EMAIL",
-      "GOOGLE_PRIVATE_KEY"
-    ]
-  },
-
-  // Registros (console.error) visíveis em Workers → acar-landing-page → Logs.
   "observability": {
     "enabled": true
   }
