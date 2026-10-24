@@ -1,5 +1,6 @@
-// Configuração do Cloudflare Workers para a landing page ACAR™.
-// Usada pelo comando de deploy "npx wrangler deploy" (Workers Builds).
+
+ // Configuração do Cloudflare Workers para a landing page ACAR™.
+ // Usada pelo comando de deploy "npx wrangler deploy" (Workers Builds).
 {
   // Precisa ser igual ao nome do Worker já criado no Cloudflare
   // (endereço acar-landing-page.<conta>.workers.dev).
@@ -32,6 +33,14 @@
   // integração com o GitHub podem não respeitar esta opção para variáveis
   // de texto; por isso, valores do painel devem ser do tipo Secret.
   "keep_vars": true,
+
+  // Valida a presença dos Secrets obrigatórios.
+  "secrets": {
+    "required": [
+      "GOOGLE_SERVICE_ACCOUNT_EMAIL",
+      "GOOGLE_PRIVATE_KEY"
+    ]
+  },
 
   // Registros (console.error) visíveis em Workers → acar-landing-page → Logs.
   "observability": {
