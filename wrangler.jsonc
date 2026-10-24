@@ -18,10 +18,19 @@
     "binding": "ASSETS"
   },
 
-  // Mantém as variáveis de texto criadas no painel do Cloudflare
-  // (GOOGLE_SERVICE_ACCOUNT_EMAIL, GOOGLE_SHEET_ID...). Sem isto, cada deploy
-  // apagaria as variáveis que não estão declaradas neste arquivo.
-  // Os Secrets (como GOOGLE_PRIVATE_KEY) nunca são apagados pelo deploy.
+  // Variáveis NÃO secretas, publicadas junto com cada deploy.
+  // O ID da planilha não é credencial: sem a chave privada da conta de
+  // serviço ele não dá acesso a nada (a planilha só é compartilhada com ela).
+  // NUNCA declare aqui GOOGLE_PRIVATE_KEY nem GOOGLE_SERVICE_ACCOUNT_EMAIL:
+  // eles ficam como Secret no painel (Settings → Variables and secrets), e
+  // uma variável com o mesmo nome aqui substituiria o Secret.
+  "vars": {
+    "GOOGLE_SHEET_ID": "161Ze0GLTmmWe5tMdPJZN1LSxvU0ofU2RBll7LtNEqVw"
+  },
+
+  // Não apaga variáveis criadas no painel. Atenção: deploys feitos pela
+  // integração com o GitHub podem não respeitar esta opção para variáveis
+  // de texto; por isso, valores do painel devem ser do tipo Secret.
   "keep_vars": true,
 
   // Registros (console.error) visíveis em Workers → acar-landing-page → Logs.
