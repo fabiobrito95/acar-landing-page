@@ -1,4 +1,3 @@
-
 /* ==========================================================================
    ACAR™ · Cloudflare Pages Function · POST /api/diagnostico
    Recebe o formulário de diagnóstico, valida no servidor e grava uma linha
@@ -413,12 +412,19 @@ export async function onRequestPost(context) {
     await appendRow(cfg, token, tab, buildRow(data));
     return json(200, { ok: true, id: data.id });
   } catch (err) {
-    const msg = (err && typeof err.message === "string") ? err.message : "";
-    const code = /^(google_auth|sheets)_[a-z0-9_]+$/.test(msg) ? msg
-      : (err && err.name === "AbortError") ? "google_timeout"
-      : "erro_interno";
+    const msg = err && typeof err.message === "string" ? err.message : "";
+    const code = /^(google_auth|sheets)_[a-z0-9_]+$/.test(msg)
+      ? msg
+      : err && err.name === "AbortError"
+        ? "google_timeout"
+        : "erro_interno";
 
-    console.error("[diagnostico] falha ao gravar: " + code);
+    // Diagnóstico técnico sem registrar credenciais ou tokens.
+    console.error("[diagnostico] falha ao gravar:", {
+      code,
+      errorName: err && err.name ? err.name : "UnknownError",
+      errorMessage: msg.slice(0, 300)
+    });
 
     if (code === "sheets_aba_nao_encontrada" && token) {
       const names = await tabNames(cfg, token);
